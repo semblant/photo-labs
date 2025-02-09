@@ -5,14 +5,14 @@ import FavIcon from "./FavIcon";
 
 
 const PhotoListItem = ({ photo }) => {
-  const { id, location, imageSource, username, profile } = photo;
+  const { id, location, urls, user } = photo;
   return (
     <div className="photo-list">
       <div className="photo-list__item">
-        <img className="photo-list__image" src={imageSource}/><br/>
-          <img className="photo-list__user-profile" src={profile}/>
+        <img className="photo-list__image" src={urls.regular}/><br/>
+          <img className="photo-list__user-profile" src={user.profile}/>
           <div className="photo-list__user-details">
-            <div className="photo-list__user-info">{username}</div>
+            <div className="photo-list__user-info">{user.username}</div>
             <div className="photo-list__user-location">{location.city}, {location.country}</div>
           </div>
         </div>
