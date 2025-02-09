@@ -1,6 +1,7 @@
 import React from "react";
 
 import "../styles/PhotoListItem.scss";
+import FavIcon from "./FavIcon";
 
 
 const PhotoListItem = ({ photo }) => {
