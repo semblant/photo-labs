@@ -31,7 +31,6 @@ const App = () => {
   return (
     <div className="App">
       <div className='photo-list'>
-      <PhotoFavButton />
         {photos}
       </div>
     </div>
