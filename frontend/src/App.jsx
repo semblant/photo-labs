@@ -6,6 +6,7 @@ import PhotoFavButton from 'components/PhotoFavButton';
 import PhotoList from 'components/PhotoList';
 import TopicListItem from 'components/TopicListItem';
 import TopicList from 'components/TopicList';
+import TopNavigationBar from 'components/TopNavigationBar'
 
 
 // create an array of photos -- using .map(_,index) to have unique keys for each photo (since they're all the same photo). Once there are new id's change to the below
@@ -28,7 +29,9 @@ const photos = [...Array(3)].map((_, index) =>
 const App = () => {
   return (
     <div className="App">
-      <TopicList />
+      <nav>
+        <TopNavigationBar />
+      </nav>
       <div className='photo-list'>
         {/*photos*/}
         <PhotoList />
