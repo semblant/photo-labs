@@ -24,15 +24,15 @@ const App = () => {
   }
 
 
-
   /* PhotoDetailsModal Component */
-  const [modal, setModal] = useState(false); // tracks one state?
-  const swtichModal = () => setModal((modal === false) ? true : false);
+  const [modal, setModal] = useState(null); // tracks one state?
+  const openModal = (photo) => setModal(photo); // opens modal with photo that was clicked
+  const closeModal = () => setModal(null); // Closes modal
 
   return (
     <div className="App">
-      <HomeRoute photos={photoDb} topics={topicDb} favourite={favourite} switchFavourite={switchFavourite}/>
-
+      <HomeRoute photos={photoDb} topics={topicDb} favourite={favourite} switchFavourite={switchFavourite} openModal={openModal}/>
+      {modal && <PhotoDetailsModal photo={modal} onClose={closeModal} />}
     </div>
   );
 };
