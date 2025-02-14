@@ -26,13 +26,16 @@ const App = () => {
 
   /* PhotoDetailsModal Component */
   const [modal, setModal] = useState(null); // tracks one state?
-  const openModal = (photo) => setModal(photo); // opens modal with photo that was clicked
+  const openModal = (photo) => {
+    console.log('Opening Modal for photo:', photo) // debug
+    setModal(photo); // opens modal with photo that was clicked
+  }
   const closeModal = () => setModal(null); // Closes modal
 
   return (
     <div className="App">
       <HomeRoute photos={photoDb} topics={topicDb} favourite={favourite} switchFavourite={switchFavourite} openModal={openModal}/>
-      {modal && <PhotoDetailsModal photo={modal} onClose={closeModal} />}
+      {modal && <PhotoDetailsModal photo={modal} onClose={closeModal} favourite={favourite} switchFavourite={switchFavourite}/>}
     </div>
   );
 };
