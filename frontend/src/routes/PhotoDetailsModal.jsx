@@ -2,17 +2,25 @@ import React from 'react';
 
 import '../styles/PhotoDetailsModal.scss'
 import closeSymbol from '../assets/closeSymbol.svg';
-import PhotoListItem from 'components/PhotoListItem';
-import FavIcon from 'components/FavIcon';
 import PhotoFavButton from 'components/PhotoFavButton';
+import PhotoList from 'components/PhotoList';
+import photos from 'mocks/photos';
 
 const PhotoDetailsModal = ({ photo, onClose, favourite, switchFavourite }) => {
-  console.log('Photo Received in Modal:', photo)
-  if (!photo) return null;
-  const { id, location, urls, user, similar_photos } = photo;
+
+  /* One suggestion for improvement would be to add error handling for the case where the photo prop is not provided to the PhotoDetailsModal component.
+  Currently, if photo is null or undefined, your application may crash when trying to access properties of photo.
+  You've already added a check for !photo and return null in that case, which is a good start.
+  However, you might want to consider displaying a user-friendly error message or a default image instead.
+  */
+  if (!photo) return null; // if photo doesn't exist, no modal shows
+
+  const { id, location, urls, user } = photo;
+  const similarPhotos = Object.values(photo.similar_photos) // Turn object of similar photos into array
+
 
   return (
-    <div className="photo-details-modal">
+    <div key={id} className="photo-details-modal">
       <div className='photo-details-modal__top-bar'>
       <button onClick={onClose} className="photo-details-modal__close-button">
         <img src={closeSymbol} alt="close symbol" />
@@ -29,14 +37,10 @@ const PhotoDetailsModal = ({ photo, onClose, favourite, switchFavourite }) => {
           <div className='photo-details-modal__photographer-locaiton'>{location.city}, {location.country}</div>
         </div>
       </div>
-
-      <div className="photo-details-modal__header">
-        <div className='.photo-details-modal__images'>list Similar Photos </div>
+      <div className="photo-details-modal__header">Similar Photos</div>
+      <div className='.photo-details-modal__images'>
+          <PhotoList photos={similarPhotos} favourite={favourite} switchFavourite={switchFavourite}/>
       </div>
-
-
-
-
     </div>
   )
 };
