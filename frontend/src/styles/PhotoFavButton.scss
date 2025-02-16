@@ -1,18 +1,30 @@
 .photo-list__fav-icon {
-  position: relative;
-  top: 8px;
-  right: -8px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
   cursor: pointer;
   margin-bottom: -30px;
   border-width: 0.1px;
   background-color: #EEEEEE;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   text-align: center;
   border-radius: 100%;
+  padding: 0;
+  border: 0;
 }
 
 .photo-list__fav-icon-svg {
   padding: 7px;
   top: 2px;
+  svg{
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.photo-details-modal .photo-details-modal__images > .photo-list__fav-icon {
+  top: 65px;
+  left: 60px;
+
 }

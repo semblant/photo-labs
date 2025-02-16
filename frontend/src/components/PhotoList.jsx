@@ -4,10 +4,10 @@ import "../styles/PhotoList.scss";
 import PhotoListItem from "./PhotoListItem";
 
 
-const PhotoList = ({ photos, favourite, switchFavourite, openModal }) => {
+const PhotoList = ({ photos, favourite, updateToFavPhotoIds, setPhotoSelected }) => {
   return (
     <ul className="photo-list">
-      {photos.map((photo) => <PhotoListItem key={photo.id} photo={photo} favourite={favourite} switchFavourite={switchFavourite} openModal={openModal}/>)}
+      {photos.map((photo) => <PhotoListItem key={photo.id} photo={photo} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds} setPhotoSelected={setPhotoSelected}/>)}
     </ul>
   );
 };
