@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 
 import './App.scss';
 import HomeRoute from 'routes/HomeRoute';
@@ -12,16 +12,17 @@ const App = () => {
   const {
     favourite,
     modal,
+    photoData,
     onPhotoSelect, // user selects a photo
     updateToFavPhotoIds, // set favourite photos
     setPhotoSelected,
-   // onLoadTopic, // load topic from nav bar
+    onLoadTopic, // load topic from nav bar
     onClosePhotoDetailsModal, // close modal
   } = useApplicationData();
 
   return (
     <div className="App">
-      <HomeRoute photos={photoDb} topics={topicDb} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds} setPhotoSelected={setPhotoSelected}/>
+      <HomeRoute photos={photoData} topics={topicDb} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds} setPhotoSelected={setPhotoSelected}/>
       {modal && <PhotoDetailsModal photo={modal} onClosePhotoDetailsModal={onClosePhotoDetailsModal} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds}/>}
     </div>
   );
