@@ -12,18 +12,17 @@ const App = () => {
     modal,
     photoData,
     topicData,
-    similarPhotoData,
     onPhotoSelect, // user selects a photo
     updateToFavPhotoIds, // set favourite photos
     setPhotoSelected,
+    getTopicsByPhotos, // get topic photos
     onLoadTopic, // load topic from nav bar
     onClosePhotoDetailsModal, // close modal
   } = useApplicationData();
 
-  console.log('similarphotos in App: ', similarPhotoData)
   return (
     <div className="App">
-      <HomeRoute photos={photoData} topics={topicData} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds} setPhotoSelected={setPhotoSelected}/>
+      <HomeRoute photos={photoData} topics={topicData} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds} setPhotoSelected={setPhotoSelected} getTopicsByPhotos={getTopicsByPhotos}/>
       {modal && <PhotoDetailsModal photo={modal} onClosePhotoDetailsModal={onClosePhotoDetailsModal} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds}/>}
     </div>
   );

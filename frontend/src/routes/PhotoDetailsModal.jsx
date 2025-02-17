@@ -6,15 +6,6 @@ import PhotoFavButton from 'components/PhotoFavButton';
 import PhotoList from 'components/PhotoList';
 
 const PhotoDetailsModal = ({ photo, onClosePhotoDetailsModal, favourite, updateToFavPhotoIds }) => {
-console.log('photodetailsmodal: ', photo)
-
-
-console.log('PhotoDetailsModal - photo:', photo);
-console.log('PhotoDetailsModal - similar_photos:', photo?.similar_photos);
-console.log('PhotoDetailsModal - similarPhotos:', Object.values(photo?.similar_photos || {}));
-
-
-
   /* One suggestion for improvement would be to add error handling for the case where the photo prop is not provided to the PhotoDetailsModal component.
   Currently, if photo is null or undefined, your application may crash when trying to access properties of photo.
   You've already added a check for !photo and return null in that case, which is a good start.

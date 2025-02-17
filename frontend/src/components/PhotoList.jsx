@@ -6,9 +6,8 @@ import PhotoListItem from "./PhotoListItem";
 
 const PhotoList = ({ photos, favourite, updateToFavPhotoIds, setPhotoSelected }) => {
 
-  const photoArray = Array.isArray(photos) ? photos : photos.photoData
+  const photoArray = Array.isArray(photos) ? photos : photos.photoData // store data from different sources as an array
 
-  console.log('similar photos inside PhotoList component: ',photos)
   return (
     <ul className="photo-list">
       {photoArray &&

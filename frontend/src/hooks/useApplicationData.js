@@ -7,7 +7,8 @@ export const ACTIONS = {
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
-  DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS'
+  DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
+  GET_PHOTOS_BY_TOPICS: 'GET_PHOTOS_BY_TOPICS'
 };
 
 
@@ -48,6 +49,8 @@ function reducer(state, action) {
 
     case ACTIONS.DISPLAY_PHOTO_DETAILS:
       return {...state, photoData: action.payload };
+    case ACTIONS.GET_PHOTOS_BY_TOPICS:
+      return { ...state, photoData: action.payload }
 
     default:
       throw new Error(
@@ -82,11 +85,22 @@ const useApplicationData = () => {
     const onClosePhotoDetailsModal = () => modalDispatch({ type: ACTIONS.SELECT_PHOTO, value: null }); // Closes modal
 
 
+    /* Topic List */
+    const getTopicsByPhotos = (topicId) => {
+        fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
+        .then((response) => response.json())
+        .then((data)=> {
+          photoDataDispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, payload: data });
+        })
+      }
+
+
     const initialState = {
       ...favourite,
       ...modal,
       photoData: [],
-      topicData: []
+      topicData: [],
+      photoTopicsData: []
     };
 
     /* Fetching photo data*/
@@ -108,12 +122,14 @@ const useApplicationData = () => {
         });
     }, []);
 
+
     return {
       favourite,
       modal,
       updateToFavPhotoIds,
       setPhotoSelected,
       onClosePhotoDetailsModal,
+      getTopicsByPhotos,
       photoData,
       topicData,
     }
