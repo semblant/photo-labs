@@ -2,8 +2,6 @@ import React, { useReducer, useState, useEffect } from 'react';
 
 import './App.scss';
 import HomeRoute from 'routes/HomeRoute';
-import photoDb from 'mocks/photos';
-import topicDb from 'mocks/topics';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 import useApplicationData from 'hooks/useApplicationData';
 
@@ -13,6 +11,7 @@ const App = () => {
     favourite,
     modal,
     photoData,
+    topicData,
     onPhotoSelect, // user selects a photo
     updateToFavPhotoIds, // set favourite photos
     setPhotoSelected,
@@ -22,7 +21,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <HomeRoute photos={photoData} topics={topicDb} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds} setPhotoSelected={setPhotoSelected}/>
+      <HomeRoute photos={photoData} topics={topicData} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds} setPhotoSelected={setPhotoSelected}/>
       {modal && <PhotoDetailsModal photo={modal} onClosePhotoDetailsModal={onClosePhotoDetailsModal} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds}/>}
     </div>
   );

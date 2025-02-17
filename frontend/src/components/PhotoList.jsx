@@ -10,6 +10,7 @@ const PhotoList = ({ photos, favourite, updateToFavPhotoIds, setPhotoSelected })
       {photos.photoData &&
         photos.photoData.map((photo) => <PhotoListItem key={photo.id} photo={photo} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds} setPhotoSelected={setPhotoSelected}/>)
     }
+    {!photos.photoData && <p>Loading photos...</p>}
     </ul>
   );
 };

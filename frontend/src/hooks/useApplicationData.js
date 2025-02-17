@@ -41,7 +41,7 @@ function reducer(state, action) {
       return {...state, photoData: action.payload }
 
     case ACTIONS.SET_TOPIC_DATA:
-      return state;
+      return { ...state, topicData: action.payload }
 
     case ACTIONS.SELECT_PHOTO:
       return action.value;
@@ -99,6 +99,15 @@ const useApplicationData = () => {
         });
     }, [photoData])
 
+    const [topicData, topicDataDispatch] = useReducer(reducer, []);
+    useEffect(() => {
+      fetch('http://localhost:8001/api/topics')
+        .then((response) => response.json())
+        .then((data) => {
+          topicDataDispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data || [] })
+        });
+    }, [topicData])
+
     return {
       favourite,
       modal,
@@ -106,6 +115,7 @@ const useApplicationData = () => {
       setPhotoSelected,
       onClosePhotoDetailsModal,
       photoData,
+      topicData
     }
 };
 
