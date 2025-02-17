@@ -6,6 +6,14 @@ import PhotoFavButton from 'components/PhotoFavButton';
 import PhotoList from 'components/PhotoList';
 
 const PhotoDetailsModal = ({ photo, onClosePhotoDetailsModal, favourite, updateToFavPhotoIds }) => {
+console.log('photodetailsmodal: ', photo)
+
+
+console.log('PhotoDetailsModal - photo:', photo);
+console.log('PhotoDetailsModal - similar_photos:', photo?.similar_photos);
+console.log('PhotoDetailsModal - similarPhotos:', Object.values(photo?.similar_photos || {}));
+
+
 
   /* One suggestion for improvement would be to add error handling for the case where the photo prop is not provided to the PhotoDetailsModal component.
   Currently, if photo is null or undefined, your application may crash when trying to access properties of photo.
@@ -13,6 +21,7 @@ const PhotoDetailsModal = ({ photo, onClosePhotoDetailsModal, favourite, updateT
   However, you might want to consider displaying a user-friendly error message or a default image instead.
   */
   if (!photo) return null; // if photo doesn't exist, no modal shows
+
 
   const { id, location, urls, user } = photo;
   const similarPhotos = Object.values(photo.similar_photos) // Turn object of similar photos into array
@@ -25,7 +34,7 @@ const PhotoDetailsModal = ({ photo, onClosePhotoDetailsModal, favourite, updateT
         <img src={closeSymbol} alt="close symbol" />
       </button>
       <div className='photo-details-modal__images'>
-        <PhotoFavButton key={photo.id} photo={photo} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds}/>
+        <PhotoFavButton key={photo.id} photo={photo.id} favourite={favourite} updateToFavPhotoIds={updateToFavPhotoIds}/>
         <img className='photo-details-modal__image' src={urls.full}/>
         <div className='photo-details-modal__photographer-details'>
           <img className="photo-details-modal__photographer-profile" src={user.profile} />

@@ -47,7 +47,7 @@ function reducer(state, action) {
       return action.value;
 
     case ACTIONS.DISPLAY_PHOTO_DETAILS:
-      return state;
+      return {...state, photoData: action.payload };
 
     default:
       throw new Error(
@@ -97,7 +97,7 @@ const useApplicationData = () => {
         .then((data) => {
           photoDataDispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data || [] })
         });
-    }, [photoData])
+    }, []);
 
     const [topicData, topicDataDispatch] = useReducer(reducer, []);
     useEffect(() => {
@@ -106,7 +106,7 @@ const useApplicationData = () => {
         .then((data) => {
           topicDataDispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data || [] })
         });
-    }, [topicData])
+    }, []);
 
     return {
       favourite,
@@ -115,7 +115,7 @@ const useApplicationData = () => {
       setPhotoSelected,
       onClosePhotoDetailsModal,
       photoData,
-      topicData
+      topicData,
     }
 };
 
