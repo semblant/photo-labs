@@ -8,7 +8,7 @@ const cors = require("cors");
 
 const app = express();
 
-const db = require("./db")
+const db = require("./db");
 
 const photos = require("./routes/photos");
 const topics = require("./routes/topics");

@@ -20,69 +20,62 @@ It seems like you're trying to use the same reducer function for two different p
  - code was given to us like this so I made it work????
 */
 
-
+// Store initial state
+const initialState = {
+  favourites: [],
+  modal: null,
+  photoData: [],
+  topicData: [],
+};
 
 function reducer(state, action) {
   switch (action.type) {
     case ACTIONS.FAV_PHOTO_ADDED:
-      return {...state, [action.payload.id]: true};
+      // Check if photoID exists in favourites already
+      if (!state.favourites.includes(action.value)) {
+        return {...state, favourites: [...state.favourites, action.value]}; // return state appended with updated favourites
+      } else
+      return state; // ensure no duplicates
 
     case ACTIONS.FAV_PHOTO_REMOVED:
-
-      /*
-      LARRY FEEDBACK:
-      Your FAV_PHOTO_REMOVED case is correctly removing the photo id from the state, but it's a bit more complex than it needs to be.
-      Instead of creating a copy of the state, deleting the key, and returning the copy, you could simply filter the array of favourite photo ids to remove the one that matches the action value.
-      */
-      const prevFavs = {...state};
-      delete prevFavs[action.value];
-      return prevFavs;
+      return { ...state, favourites: state.favourites.filter((id) => id !== action.value)};
 
     case ACTIONS.SET_PHOTO_DATA:
-      return {...state, photoData: action.payload }
+      return {...state, photoData: action.payload };
 
     case ACTIONS.SET_TOPIC_DATA:
-      return { ...state, topicData: action.payload }
+      return { ...state, topicData: action.payload };
 
     case ACTIONS.SELECT_PHOTO:
-      return action.value;
+      return { ...state, modal: action.value };
 
     case ACTIONS.DISPLAY_PHOTO_DETAILS:
       return {...state, photoData: action.payload };
+
     case ACTIONS.GET_PHOTOS_BY_TOPICS:
-      return { ...state, photoData: action.payload }
+      return { ...state, photoData: action.payload };
 
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
-      )
-  }
+      );
+  };
 };
 
 
 const useApplicationData = () => {
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
     /* Favourites */
-    /*
-    LARRY FEEDBACK:
-    In your FAV_PHOTO_ADDED case, you're setting the state to be an object with the photo id as the key and true as the value.
-    This doesn't seem to align with the requirement of keeping a list of favourite photos.
-    You might want to revise this to keep an array of favourite photo ids.
-
-
-    -- I never had it as an array, it was always an object - easier to access the photoId in an object than an array
-    */
-    const [favourite, favDispatch] = useReducer(reducer, {}); // store current state of favourite as an empty object
     const updateToFavPhotoIds = (photoId) => {
-      if (!favourite[photoId]) favDispatch({ type: ACTIONS.FAV_PHOTO_ADDED, payload: {id: photoId, isFavourite: false }});
-      else favDispatch(({ type: ACTIONS.FAV_PHOTO_REMOVED, value:photoId }))
+      if (!state.favourites.includes(photoId)) dispatch({type: ACTIONS.FAV_PHOTO_ADDED, value: photoId});
+      else dispatch(({ type: ACTIONS.FAV_PHOTO_REMOVED, value:photoId }));
     }
 
     /* PhotoDetailsModal Component */
-    const [modal, modalDispatch] = useReducer(reducer, null);
-
-    const setPhotoSelected = (photo) => modalDispatch({ type: ACTIONS.SELECT_PHOTO, value: photo }); // opens modal with photo that was clicked
-
-    const onClosePhotoDetailsModal = () => modalDispatch({ type: ACTIONS.SELECT_PHOTO, value: null }); // Closes modal
+    const setPhotoSelected = (photo) => dispatch({ type: ACTIONS.SELECT_PHOTO, value: photo }); // opens modal with photo that was clicked
+    const onClosePhotoDetailsModal = () => dispatch({ type: ACTIONS.SELECT_PHOTO, value: null }); // Closes modal
 
 
     /* Topic List */
@@ -90,48 +83,37 @@ const useApplicationData = () => {
         fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
         .then((response) => response.json())
         .then((data)=> {
-          photoDataDispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, payload: data });
-        })
-      }
-
-
-    const initialState = {
-      ...favourite,
-      ...modal,
-      photoData: [],
-      topicData: [],
-      photoTopicsData: []
-    };
+          dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, payload: data });
+        });
+      };
 
     /* Fetching photo data*/
-    const [photoData, photoDataDispatch] = useReducer(reducer, []);
     useEffect(() => {
       fetch('http://localhost:8001/api/photos')
         .then((response) => response.json())
         .then((data) => {
-          photoDataDispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data || [] })
+          dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data || [] })
         });
     }, []);
 
-    const [topicData, topicDataDispatch] = useReducer(reducer, []);
     useEffect(() => {
       fetch('http://localhost:8001/api/topics')
         .then((response) => response.json())
         .then((data) => {
-          topicDataDispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data || [] })
+          dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data || [] })
         });
     }, []);
 
 
     return {
-      favourite,
-      modal,
       updateToFavPhotoIds,
       setPhotoSelected,
       onClosePhotoDetailsModal,
       getTopicsByPhotos,
-      photoData,
-      topicData,
+      favourites: state.favourites,
+      modal: state.modal,
+      photoData: state.photoData,
+      topicData: state.topicData,
     }
 };
 

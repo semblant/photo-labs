@@ -3,8 +3,10 @@ import React, { useCallback, useState } from 'react';
 import '../styles/PhotoFavButton.scss';
 import FavIcon from './FavIcon';
 
-function PhotoFavButton({ photo, favourite, updateToFavPhotoIds }) {
-  const isFavourited = favourite[photo.id] // get favourite status for specific photo
+function PhotoFavButton({ photo, favourites, updateToFavPhotoIds }) {
+  const isFavourited = favourites.find((element) =>  {
+    if (element === photo.id) return element // get favourite status for specific photo
+  });
 
   return (
     <button key={photo.id} className="photo-list__fav-icon" onClick={(event) => {event.stopPropagation(); updateToFavPhotoIds(photo.id)}}>

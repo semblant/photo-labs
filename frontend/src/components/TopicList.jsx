@@ -7,10 +7,10 @@ import TopicListItem from "./TopicListItem";
 const TopicList = ({ topics, getTopicsByPhotos }) => {
   return (
     <div className="top-nav-bar__topic-list">
-      {topics.topicData && topics.topicData.map((topic) =>
+      {topics && topics.map((topic) =>
         <TopicListItem key={topic.id} topics={topic} getTopicsByPhotos={getTopicsByPhotos} />
       )}
-      {!topics.topicData && <p>Loading topics...</p>}
+      {!topics && <p>Loading topics...</p>}
     </div>
   );
 };
