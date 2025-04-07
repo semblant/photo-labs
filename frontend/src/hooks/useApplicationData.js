@@ -8,17 +8,8 @@ export const ACTIONS = {
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
   DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
-  GET_PHOTOS_BY_TOPICS: 'GET_PHOTOS_BY_TOPICS'
+  GET_PHOTOS_BY_TOPICS: 'GET_PHOTOS_BY_TOPICS',
 };
-
-
-/*
-LARRY FEEDBACK:
-
-It seems like you're trying to use the same reducer function for two different pieces of state (favourite and modal). While this is possible, it can lead to confusion and bugs. It would be better to have separate reducers for each piece of state.
-
- - code was given to us like this so I made it work????
-*/
 
 // Store initial state
 const initialState = {
@@ -41,6 +32,8 @@ function reducer(state, action) {
       return { ...state, favourites: state.favourites.filter((id) => id !== action.value)};
 
     case ACTIONS.SET_PHOTO_DATA:
+      if (!action.payload) return state
+      console.log("inside reducer: ", action.payload)
       return {...state, photoData: action.payload };
 
     case ACTIONS.SET_TOPIC_DATA:
@@ -87,6 +80,16 @@ const useApplicationData = () => {
         });
       };
 
+    /* Search Results */
+    const getPhotosBySearch = (query) => {
+      fetch(`http://localhost:8001/api/search/${encodeURIComponent(query)}`)
+      .then((response) => response.json())
+      .then((data)=> {
+        console.log("Response data: ", data)
+        dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: data || []});
+      });
+    };
+
     /* Fetching photo data*/
     useEffect(() => {
       fetch('http://localhost:8001/api/photos')
@@ -110,6 +113,7 @@ const useApplicationData = () => {
       setPhotoSelected,
       onClosePhotoDetailsModal,
       getTopicsByPhotos,
+      getPhotosBySearch,
       favourites: state.favourites,
       modal: state.modal,
       photoData: state.photoData,

@@ -12,10 +12,10 @@ However, in the sample solution, these props are not used.
 Make sure these props are being used in the PhotoList component, otherwise, you can remove them.
 */
 
-const HomeRoute = ({photos, topics, favourites, updateToFavPhotoIds, setPhotoSelected, getTopicsByPhotos }) => {
+const HomeRoute = ({photos, topics, favourites, updateToFavPhotoIds, setPhotoSelected, getTopicsByPhotos, getPhotosBySearch }) => {
   return (
     <div className="home-route">
-      <TopNavigationBar topics={topics} getTopicsByPhotos={getTopicsByPhotos} favourites={favourites}/>
+      <TopNavigationBar topics={topics} getTopicsByPhotos={getTopicsByPhotos} favourites={favourites} getPhotosBySearch={getPhotosBySearch}/>
       <PhotoList photos={photos} favourites={favourites} updateToFavPhotoIds={updateToFavPhotoIds} setPhotoSelected={setPhotoSelected}/>
     </div>
   );

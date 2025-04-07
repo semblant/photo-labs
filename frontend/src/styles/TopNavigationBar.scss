@@ -17,4 +17,45 @@
   color: #111;
   text-underline-position: auto;
   margin-left: 24px;
+
+  a {
+    text-decoration: none;
+    color: #111
+  }
+}
+
+.top-nav-bar-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: auto;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: flex-end;
+  width: 200px;
+
+  .search-bar {
+    position: absolute;
+    right: 70px; // Adjust based on icon size
+    width: 100%;
+    flex-grow: 1;
+    background: white;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 5px;
+    display: flex;
+  }
+
+  .search-bar input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 5px;
+  }
 }
